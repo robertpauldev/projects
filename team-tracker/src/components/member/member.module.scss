@@ -25,6 +25,14 @@
   &__role {
     margin-top: auto;
     font-size: .875rem;
-    font-weight: 300;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  &__location {
+    margin-top: .5rem;
+    font-size: .725rem;
+    font-weight: 400;
+    text-transform: uppercase;
   }
 }
