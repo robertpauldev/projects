@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 type Role = "Junior Software Engineer" | "Software Engineer" | "Senior Software Engineer" | "Principal Software Engineer" | "Staff Engineer";
 
-type Member = {
+type MemberType = {
   _id: string;
   avatar: string;
   email: string;
@@ -11,7 +11,7 @@ type Member = {
   role: Role;
 }
 
-const createMember = (): Member => {
+const createMember = (): MemberType => {
 
   const sex       = faker.person.sexType();
   const firstName = faker.person.firstName( sex );
@@ -28,4 +28,4 @@ const createMember = (): Member => {
   };
 }
 
-export { type Member, createMember };
+export { type MemberType, createMember };
