@@ -11,4 +11,40 @@
     &__title {
       margin-bottom: 1rem;
     }
+
+    &__select,
+    &__button {
+      padding-left: .5rem;
+      padding-right: .25rem;
+      font-family: "Nunito";
+      font-size: .875rem;
+      border-radius: .25rem;
+      letter-spacing: .0125rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    &__select {
+      margin-right: .25rem;
+      border-color: #ccc;
+      line-height: 2rem;
+      height: 2rem;
+      transition: border-color ease-in-out .1s;
+
+      &:hover,
+      &:focus {
+        border-color: #aaa;
+      }
+    }
+
+    &__button {
+      -webkit-appearance: none;
+      border: 1px solid #000;
+      line-height: 2;
+      background-color: #000;
+      color: #fff;
+      font-weight: 600;
+    }
 }

@@ -53,7 +53,7 @@ const Data: React.FC = () => {
           )
         }
       </select>
-      <button onClick={ handleClear }>Clear filtering</button>
+      <button className={ styles["data__button"] } onClick={ handleClear }>Clear filtering</button>
     </div>
   );
 }
