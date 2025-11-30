@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import roles from "../data/roles";
+import locations from "../data/locations";
 
 type Role = (typeof roles)[number];
 
@@ -11,6 +12,7 @@ type MemberType = {
   lastName: string;
   role: Role;
   location: string;
+  gitHub: string;
 }
 
 const createMember = (): MemberType => {
@@ -19,6 +21,7 @@ const createMember = (): MemberType => {
   const firstName = faker.person.firstName( sex );
   const lastName  = faker.person.lastName();
   const email     = faker.internet.email({ firstName, lastName });
+  const gitHub    = faker.internet.username({ firstName, lastName });
 
   return {
     _id: faker.string.uuid(),
@@ -26,8 +29,9 @@ const createMember = (): MemberType => {
     email,
     firstName,
     lastName,
-    role: faker.helpers.arrayElement([ "Junior Software Engineer", "Software Engineer", "Senior Software Engineer", "Principal Software Engineer", "Staff Engineer" ]),
-    location: faker.helpers.arrayElement([ "North America", "South America", "Europe", "Africa", "Asia" ])
+    role: faker.helpers.arrayElement( roles ),
+    location: faker.helpers.arrayElement( locations ),
+    gitHub
   };
 }
 

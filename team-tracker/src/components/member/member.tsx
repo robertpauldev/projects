@@ -14,14 +14,18 @@ const Member: React.FC<MemberProps> = ({ member }) => {
 
   return (
     <li
-      className={styles.member}
+      className={ `member ${ styles.member }` }
+      data-show={ `true` } 
       data-role={ slugifyString( member.role ) }
       data-location={ slugifyString( member.location ) }
     >
       <img className={ styles["member__avatar"] } src={ member.avatar } alt={ fullName } />
       <h3 className={ styles["member__name"] }>{ fullName }</h3>
       <h4 className={ styles["member__role"] }>{ member.role }</h4>
-      <p className={ styles["member__location"] }>{ member.location }</p>
+      <ul>
+        <li>{ member.location }</li>
+        <li>{ member.gitHub }</li>
+      </ul>
     </li>
   );
 };
