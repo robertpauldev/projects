@@ -11,7 +11,7 @@
 
   &:hover,
   &:focus {
-    box-shadow: 0 .125rem .125rem rgba(0,0,0,.025);
+    box-shadow: 0 .125rem .125rem rgba(0, 0, 0, .025);
   }
 
   &__avatar {
@@ -29,17 +29,36 @@
   }
 
   &__role {
-    margin-top: auto;
-    font-size: .875rem;
+    margin-bottom: .5rem;
+    font-size: 1rem;
     font-weight: 400;
     line-height: 1.2;
   }
 
-  &__location {
-    margin-top: .5rem;
-    font-size: .725rem;
-    font-weight: 400;
-    text-transform: uppercase;
+  &__meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(.5rem, 2vw, 1rem);
+    margin-top: auto;
+    width: 100%;
+    list-style: none;
+    font-size: .75rem;
+
+    &-location,
+    &-github {
+      display: inline-flex;
+      align-items: center;
+
+      &::before {
+        content: "";
+        margin-right: .25rem;
+        aspect-ratio: 1/1;
+        width: 1rem;
+        background-color: #000;
+        border-radius: 50%;
+      }
+    }
   }
 
   &[data-show="false"] {
