@@ -1,0 +1,14 @@
+.data {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    border: 1px solid #f0f0f0;
+    max-width: 75vw;
+    border-radius: .5rem;
+    background-color: #fff;
+
+    &__title {
+      margin-bottom: 1rem;
+    }
+}
