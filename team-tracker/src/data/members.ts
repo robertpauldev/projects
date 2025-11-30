@@ -1,6 +1,5 @@
 import { faker } from '@faker-js/faker';
 import roles from "../data/roles";
-import locations from "../data/locations";
 
 type Role = (typeof roles)[number];
 
@@ -11,7 +10,6 @@ type MemberType = {
   firstName: string;
   lastName: string;
   role: Role;
-  location: string;
   gitHub: string;
 }
 
@@ -30,7 +28,6 @@ const createMember = (): MemberType => {
     firstName,
     lastName,
     role: faker.helpers.arrayElement( roles ),
-    location: faker.helpers.arrayElement( locations ),
     gitHub
   };
 }

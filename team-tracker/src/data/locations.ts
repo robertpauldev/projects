@@ -1,9 +1,12 @@
-const roles: Array<string> = [
-  "North America",
-  "South America",
-  "Europe",
-  "Africa",
-  "Asia"
+const locations: Array<object> = [
+  {
+    name: "USA",
+    flag: "🇺🇸",
+  },
+  {
+    name: "UK",
+    flag: "🇬🇧",
+  }
 ] as const;
 
-export default roles;
+export default locations;
