@@ -3,10 +3,16 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  border: 1px solid #eee;
+  border: 1px solid #f0f0f0;
   background-color: #fff;
   border-radius: .5rem;
   text-align: center;
+  transition: box-shadow ease-in-out .12s;
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 .125rem .125rem rgba(0,0,0,.025);
+  }
 
   &__avatar {
     margin-bottom: 1rem;
@@ -34,5 +40,9 @@
     font-size: .725rem;
     font-weight: 400;
     text-transform: uppercase;
+  }
+
+  &[data-show="false"] {
+    display: none;
   }
 }

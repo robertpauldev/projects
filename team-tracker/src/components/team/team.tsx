@@ -7,7 +7,7 @@ const theMembers: MemberType[] = Array.from({ length: 30 }, () => createMember()
 
 const Team: React.FC = () => {
   return (
-    <div className={styles["team-wrap"]}>
+    <div className={styles["team"]}>
       <h2 className={styles["team__title"]}>Meet the team</h2>
       <ul className={styles["team__members"]}>
         {theMembers.map((member) => (
