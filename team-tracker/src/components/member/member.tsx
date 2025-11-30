@@ -21,6 +21,9 @@ const Member: React.FC<MemberProps> = ({ member }) => {
       <h3 className={ styles["member__name"] }>{ fullName }</h3>
       <h4 className={ styles["member__role"] }>{ member.role }</h4>
       <ul className={ styles["member__meta"] }>
+        <li className={ styles["member__meta-location"] }>
+          <span>{ member.location }</span>
+        </li>
         <li className={ styles["member__meta-github"] }>
           <span>{ member.gitHub }</span>
         </li>

@@ -49,7 +49,9 @@
     &-github {
       display: inline-flex;
       align-items: center;
+    }
 
+    &-github {
       &::before {
         content: "";
         margin-right: .25rem;

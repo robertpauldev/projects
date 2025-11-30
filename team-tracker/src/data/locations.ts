@@ -1,12 +1,6 @@
-const locations: Array<object> = [
-  {
-    name: "USA",
-    flag: "🇺🇸",
-  },
-  {
-    name: "UK",
-    flag: "🇬🇧",
-  }
+const locations: Array<string> = [
+  "🇺🇸 USA",
+  "🇬🇧 UK",
 ] as const;
 
 export default locations;
