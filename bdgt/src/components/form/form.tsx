@@ -1,5 +1,5 @@
-// import { useEffect, useMemo } from "react";
 import type { TableEntry } from "../../types";
+import styles from "./form.module.scss";
 
 type Props = {
   formType: string;
@@ -31,32 +31,43 @@ const Form = ( { formType, setFormData }: Props ) => {
   };
 
   return (
-    <form onSubmit={handleIncomeSubmit}>
-      <legend>{ formType }</legend>
+    <form className={ styles["form"] } onSubmit={handleIncomeSubmit}>
+      <legend className={ styles["form__legend"] }>{ formType }</legend>
 
-      <input
-        className="input--title"
-        type="text"
-        placeholder={ `Add ${ formType } title` }
-      />
+      <fieldset className={ styles["form__fieldset"] }>
+        <p className={ styles["form__intro"] }>{ `Enter all ${ formType }s for this month.` }</p>
 
-      <input
-        className="input--sum"
-        type="number"
-        min="0"
-        step="0.01"
-        placeholder={ `Add ${ formType } amount per month` }
-      />
+        <div className={ styles["form__row"] }>
+          <input
+            className={ styles["form__input"] }
+            type="text"
+            placeholder={ `Add ${ formType } title` }
+          />
 
-      <input
-        className="input--date"
-        type="number"
-        min="1"
-        max="31"
-        placeholder={ `Add ${ formType } date` }
-      />
+          <input
+            className={ styles["form__input"] }
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder={ `Add ${ formType } amount per month` }
+          />
 
-      <button type="submit">Add { formType }</button>
+          <input
+            className={ styles["form__input"] }
+            type="number"
+            min="1"
+            max="31"
+            placeholder={ `Add ${ formType } date` }
+          />
+
+          <button
+            className={ styles["form__button"] }
+            type="submit"
+          >
+            <span className={ styles["form__button-label"] }>Add { formType }</span>
+          </button>
+        </div>
+      </fieldset>
     </form>
   );
 }
