@@ -7,6 +7,11 @@ type Props = {
 };
 
 const Table = ( { tableData, totalValue, onRemove }: Props ) => {
+
+  if ( totalValue === 0 ) {
+    return;
+  }
+
   return (
     <table className="table">
       <thead>
