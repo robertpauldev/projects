@@ -1,20 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import "./App.css";
-
-type IncomeEntry = {
-  title: string;
-  sum: number;
-  date: number;
-};
+import Table from "./components/table/table";
+import type { IncomeEntry } from "./types";
 
 function App() {
 
-  const [incomeData, setIncomeData] = useState<IncomeEntry[]>([]);
-  const [totalIncome, setTotalIncome] = useState(0);
+  const [incomeData, setIncomeData] = useState<IncomeEntry[]>(
+    () => {
+      const stored = localStorage.getItem( "bdgt-income" );
+      return stored ? JSON.parse( stored ) : [];
+    }
+  );
+
+  const totalIncome = useMemo(
+    () => incomeData.reduce((sum, e) => sum + e.sum, 0),
+    [incomeData]
+  );
+
+  const removeIncome = (id: string) => {
+    setIncomeData(prev =>
+      prev.filter(entry => entry.id !== id)
+    );
+  };
 
   useEffect(() => {
-    localStorage.setItem( "bdgt", JSON.stringify( incomeData ) );
-  }, [ incomeData, totalIncome ] );
+    localStorage.setItem('bdgt-income', JSON.stringify(incomeData));
+  }, [incomeData]);
+
+  useEffect(() => {
+    localStorage.setItem('bdgt-total', JSON.stringify(totalIncome));
+  }, [totalIncome]);
 
   const handleIncomeSubmit = ( e: React.FormEvent<HTMLFormElement> ) => {
 
@@ -31,10 +46,9 @@ function App() {
       return;
     }
 
-    const newEntry: IncomeEntry = { title, sum, date };
+    const newEntry: IncomeEntry = { id: crypto.randomUUID(), title, sum, date };
 
     setIncomeData( prev => [ ...prev, newEntry ] );
-    setTotalIncome( prev => prev + sum );
 
     form.reset();
   };
@@ -67,41 +81,10 @@ function App() {
             placeholder="Add income date"
           />
 
-          <button type="submit">Add</button>
+          <button type="submit">Add Income</button>
         </form>
 
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Remove?</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {incomeData.map((entry, index) => (
-              <tr key={index}>
-                <td>{entry.title}</td>
-                <td>{entry.sum}</td>
-                <td>{entry.date}</td>
-                <td>&times;</td>
-              </tr>
-            ))}
-          </tbody>
-
-          <tfoot>
-            <tr>
-              <th>
-                <strong>Total</strong>
-              </th>
-              <th>{totalIncome}</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
+        <Table incomeData={ incomeData } totalIncome={ totalIncome } onRemove={ removeIncome } />
       </div>
     </>
   );
