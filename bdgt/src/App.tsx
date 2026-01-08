@@ -57,6 +57,9 @@ function App() {
     <>
       <div>
         <h1>bdgt</h1>
+        <div>
+          <p>Welcome to <strong>bdgt</strong>, your monthly budget forecaster.</p>
+        </div>
 
         <form onSubmit={handleIncomeSubmit}>
           <legend>Income</legend>
