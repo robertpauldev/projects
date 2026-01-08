@@ -1,11 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import "./App.css";
+import Form from "./components/form/form";
 import Table from "./components/table/table";
-import type { IncomeEntry } from "./types";
+import type { TableEntry } from "./types";
 
 function App() {
 
-  const [incomeData, setIncomeData] = useState<IncomeEntry[]>(
+  const [incomeData, setIncomeData] = useState<TableEntry[]>(
     () => {
       const stored = localStorage.getItem( "bdgt-income" );
       return stored ? JSON.parse( stored ) : [];
@@ -13,7 +14,7 @@ function App() {
   );
 
   const totalIncome = useMemo(
-    () => incomeData.reduce((sum, e) => sum + e.sum, 0),
+    () => incomeData.reduce( ( sum, e ) => sum + e.sum, 0 ),
     [incomeData]
   );
 
@@ -23,35 +24,39 @@ function App() {
     );
   };
 
+  const [costData, setCostData] = useState<TableEntry[]>(
+    () => {
+      const stored = localStorage.getItem( "bdgt-costs" );
+      return stored ? JSON.parse( stored ) : [];
+    }
+  );
+
+  const totalCosts = useMemo(
+    () => costData.reduce( ( sum, e ) => sum + e.sum, 0 ),
+    [costData]
+  );
+
+  const removeCost = (id: string) => {
+    setCostData(prev =>
+      prev.filter(entry => entry.id !== id)
+    );
+  };
+
   useEffect(() => {
     localStorage.setItem('bdgt-income', JSON.stringify(incomeData));
   }, [incomeData]);
 
   useEffect(() => {
-    localStorage.setItem('bdgt-total', JSON.stringify(totalIncome));
+    localStorage.setItem('bdgt-income-total', JSON.stringify(totalIncome));
   }, [totalIncome]);
 
-  const handleIncomeSubmit = ( e: React.FormEvent<HTMLFormElement> ) => {
+  useEffect(() => {
+    localStorage.setItem('bdgt-costs', JSON.stringify(costData));
+  }, [costData]);
 
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    const inputs = form.querySelectorAll( "input" );
-
-    const title = inputs[0].value.trim();
-    const sum = parseInt( inputs[1].value, 10 );
-    const date = parseInt( inputs[2].value, 10 );
-
-    if ( !title || isNaN( sum) || isNaN(date) ) {
-      return;
-    }
-
-    const newEntry: IncomeEntry = { id: crypto.randomUUID(), title, sum, date };
-
-    setIncomeData( prev => [ ...prev, newEntry ] );
-
-    form.reset();
-  };
+  useEffect(() => {
+    localStorage.setItem('bdgt-costs-total', JSON.stringify(totalCosts));
+  }, [totalCosts]);
 
   return (
     <>
@@ -61,33 +66,11 @@ function App() {
           <p>Welcome to <strong>bdgt</strong>, your monthly budget forecaster.</p>
         </div>
 
-        <form onSubmit={handleIncomeSubmit}>
-          <legend>Income</legend>
+        <Form formType="income" setFormData={ setIncomeData } />
+        <Table tableData={ incomeData } totalValue={ totalIncome } onRemove={ removeIncome } />
 
-          <input
-            className="input--title"
-            type="text"
-            placeholder="Add income title"
-          />
-
-          <input
-            className="input--sum"
-            type="number"
-            placeholder="Add income amount per month"
-          />
-
-          <input
-            className="input--date"
-            type="number"
-            min="1"
-            max="31"
-            placeholder="Add income date"
-          />
-
-          <button type="submit">Add Income</button>
-        </form>
-
-        <Table incomeData={ incomeData } totalIncome={ totalIncome } onRemove={ removeIncome } />
+        <Form formType="costs" setFormData={ setCostData } />
+        <Table tableData={ costData } totalValue={ totalCosts } onRemove={ removeCost } />
       </div>
     </>
   );

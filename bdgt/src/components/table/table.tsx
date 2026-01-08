@@ -1,12 +1,12 @@
-import type { IncomeEntry } from "../../types";
+import type { TableEntry } from "../../types";
 
 type Props = {
-  incomeData: IncomeEntry[];
-  totalIncome: number;
+  tableData: TableEntry[];
+  totalValue: number;
   onRemove: (id: string) => void;
 };
 
-const Table = ( { incomeData, totalIncome, onRemove }: Props ) => {
+const Table = ( { tableData, totalValue, onRemove }: Props ) => {
   return (
     <table className="table">
       <thead>
@@ -19,7 +19,7 @@ const Table = ( { incomeData, totalIncome, onRemove }: Props ) => {
       </thead>
 
       <tbody>
-        { incomeData.map((entry: IncomeEntry, index: number ) => (
+        { tableData.map((entry: TableEntry, index: number ) => (
           <tr key={index}>
             <td>{entry.title}</td>
             <td>{entry.sum}</td>
@@ -36,7 +36,7 @@ const Table = ( { incomeData, totalIncome, onRemove }: Props ) => {
           <th>
             <strong>Total</strong>
           </th>
-          <th>{ totalIncome }</th>
+          <th>{ totalValue.toFixed( 2 ) }</th>
           <th></th>
           <th></th>
         </tr>
