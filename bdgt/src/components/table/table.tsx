@@ -1,4 +1,5 @@
 import type { TableEntry } from "../../types";
+import styles from "./table.module.scss";
 
 type Props = {
   tableData: TableEntry[];
@@ -26,35 +27,38 @@ const Table = ( { tableData, totalValue, onRemove }: Props ) => {
   }
 
   return (
-    <table className="table">
-      <thead>
+    <table className={ styles['table'] }>
+      <thead className={ styles['table__head'] }>
         <tr>
           <th>Title</th>
           <th>Amount</th>
           <th>Date</th>
-          <th>Remove?</th>
+          <th></th>
         </tr>
       </thead>
 
-      <tbody>
+      <tbody className={ styles['table__body'] }>
         { tableData.map((entry: TableEntry, index: number ) => (
           <tr key={index}>
             <td>{entry.title}</td>
-            <td>{entry.sum}</td>
-            <td>{entry.date}</td>
-            <td>
-              <button onClick={ () => onRemove( entry.id ) }>&times;</button>
+            <td className={ styles["table__td--numeric"] }>{entry.sum}</td>
+            <td className={ styles["table__td--numeric"] }>{ ordinalSuffixDate( entry.date ) }</td>
+            <td className={ styles["table__td--numeric"] }>
+              <button
+                className={ styles["table__button"] }
+                onClick={ () => onRemove( entry.id ) }
+              >Remove</button>
             </td>
           </tr>
         ))}
       </tbody>
 
-      <tfoot>
+      <tfoot className={ styles['table__footer'] }>
         <tr>
           <th>
             <strong>Total</strong>
           </th>
-          <th>{ totalValue.toFixed( 2 ) }</th>
+          <th className={ styles["table__th--numeric"] }>{ totalValue.toFixed( 2 ) }</th>
           <th></th>
           <th></th>
         </tr>
