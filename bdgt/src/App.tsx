@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import "./App.css";
+import styles from "./app.module.scss";
 import Form from "./components/form/form";
 import Table from "./components/table/table";
 import type { TableEntry } from "./types";
@@ -60,17 +61,23 @@ function App() {
 
   return (
     <>
-      <div>
-        <h1>bdgt</h1>
-        <div>
-          <p>Welcome to <strong>bdgt</strong>, your monthly budget forecaster.</p>
+      <div className={ styles["app"] }>
+        <div className={ styles["app__wrap"] }>
+          <h1>bdgt</h1>
+          <div>
+            <p>Welcome to <strong>bdgt</strong>, your monthly budget forecaster.</p>
+          </div>
+
+          <section className={ styles["app__section"] }>
+            <Form formType="income" setFormData={ setIncomeData } />
+            <Table tableData={ incomeData } totalValue={ totalIncome } onRemove={ removeIncome } />
+          </section>
+
+          <section className={ styles["app__section"] }>
+            <Form formType="cost" setFormData={ setCostData } />
+            <Table tableData={ costData } totalValue={ totalCosts } onRemove={ removeCost } />
+          </section>
         </div>
-
-        <Form formType="income" setFormData={ setIncomeData } />
-        <Table tableData={ incomeData } totalValue={ totalIncome } onRemove={ removeIncome } />
-
-        <Form formType="costs" setFormData={ setCostData } />
-        <Table tableData={ costData } totalValue={ totalCosts } onRemove={ removeCost } />
       </div>
     </>
   );

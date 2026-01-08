@@ -1,0 +1,17 @@
+.app {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+
+  &__wrap {
+    max-width: 80vw;
+  }
+
+  &__section {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid rgba(255,255,255,.125);
+    border-radius: .5rem;
+  }
+}
