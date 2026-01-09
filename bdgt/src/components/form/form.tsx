@@ -1,4 +1,4 @@
-import type { TableEntry } from "../../types";
+import type { TableEntry } from "../../utils/types";
 import styles from "./form.module.scss";
 
 type Props = {

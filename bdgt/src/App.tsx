@@ -3,7 +3,7 @@ import "./App.css";
 import styles from "./app.module.scss";
 import Form from "./components/form/form";
 import Table from "./components/table/table";
-import type { TableEntry } from "./types";
+import type { TableEntry } from "./utils/types";
 
 function App() {
 

@@ -1,4 +1,4 @@
-import type { TableEntry } from "../../types";
+import type { TableEntry } from "../../utils/types";
 import { ordinalSuffixDate } from "../../utils/utils";
 import { constants } from "../../utils/constants";
 import styles from "./table.module.scss";
