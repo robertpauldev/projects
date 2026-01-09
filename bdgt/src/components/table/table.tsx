@@ -4,12 +4,13 @@ import { constants } from "../../utils/constants";
 import styles from "./table.module.scss";
 
 type Props = {
+  tableType: string;
   tableData: TableEntry[];
   totalValue: number;
-  onRemove: (id: string) => void;
+  onRemove: ( id: string ) => void;
 };
 
-const Table = ( { tableData, totalValue, onRemove }: Props ) => {
+const Table = ( { tableType, tableData, totalValue, onRemove }: Props ) => {
 
   if ( totalValue === 0 ) {
     return;
@@ -22,15 +23,15 @@ const Table = ( { tableData, totalValue, onRemove }: Props ) => {
           <th>Title</th>
           <th>Amount</th>
           <th>Date</th>
-          <th></th>
+          <th>&nbsp;</th>
         </tr>
       </thead>
 
       <tbody className={ styles['table__body'] }>
-        { tableData.map((entry: TableEntry, index: number ) => (
-          <tr key={index}>
-            <td>{entry.title}</td>
-            <td className={ styles["table__td--numeric"] }>{entry.sum}</td>
+        { tableData.map( ( entry: TableEntry, index: number ) => (
+          <tr key={ index }>
+            <td>{ entry.title }</td>
+            <td className={ styles["table__td--numeric"] }>{ entry.sum }</td>
             <td className={ styles["table__td--numeric"] }>{ ordinalSuffixDate( entry.date ) }</td>
             <td className={ styles["table__td--numeric"] }>
               <button
@@ -45,9 +46,9 @@ const Table = ( { tableData, totalValue, onRemove }: Props ) => {
       <tfoot className={ styles['table__footer'] }>
         <tr>
           <th>
-            <strong>Total</strong>
+            <strong>Total { `${ tableType }s` }</strong>
           </th>
-          <th className={ styles["table__th--numeric"] }>{ totalValue.toFixed( 2 ) }</th>
+          <th className={ styles["table__th--numeric"] }>{ `${ constants.CURRENCY }${ totalValue.toFixed( 2 ) }` }</th>
           <th></th>
           <th></th>
         </tr>
