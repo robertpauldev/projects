@@ -25,10 +25,15 @@
     border: unset;
   }
 
-  &__input {
+  &__input,
+  &__select {
     background-color: rgba(255,255,255,.125);
     color: #fff;
     border-radius: .25rem;
+  }
+
+  &__select {
+    text-transform: capitalize;
   }
 
   &__button {
@@ -51,12 +56,16 @@
   }
 
   &__input,
-  &__button {
+  &__button,
+  &__select {
     padding-left: .5rem;
     padding-right: .5rem;
     border: unset;
     line-height: 2;
-    
     font-family: "Nunito", sans-serif;
+    
+    &::placeholder {
+      text-transform: capitalize;
+    }
   }
 }
