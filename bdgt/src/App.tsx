@@ -70,12 +70,12 @@ function App() {
 
           <section className={ styles["app__section"] }>
             <Form formType="income" setFormData={ setIncomeData } />
-            <Table tableData={ incomeData } totalValue={ totalIncome } onRemove={ removeIncome } />
+            <Table tableType="income" tableData={ incomeData } totalValue={ totalIncome } onRemove={ removeIncome } />
           </section>
 
           <section className={ styles["app__section"] }>
             <Form formType="cost" setFormData={ setCostData } />
-            <Table tableData={ costData } totalValue={ totalCosts } onRemove={ removeCost } />
+            <Table tableType="cost" tableData={ costData } totalValue={ totalCosts } onRemove={ removeCost } />
           </section>
         </div>
       </div>
