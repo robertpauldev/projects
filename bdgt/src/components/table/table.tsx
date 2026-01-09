@@ -1,4 +1,6 @@
 import type { TableEntry } from "../../types";
+import { ordinalSuffixDate } from "../../utils/utils";
+import { constants } from "../../utils/constants";
 import styles from "./table.module.scss";
 
 type Props = {
@@ -6,19 +8,6 @@ type Props = {
   totalValue: number;
   onRemove: (id: string) => void;
 };
-
-const ordinalSuffixDate = ( date: number ) => {
-  switch ( date ) {
-    case 1:
-      return "1st";
-    case 2:
-      return "2nd";
-    case 3:
-      return "3rd";
-    default:
-      return `${ date }th`;
-  }
-}
 
 const Table = ( { tableData, totalValue, onRemove }: Props ) => {
 
