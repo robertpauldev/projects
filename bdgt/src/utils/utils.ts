@@ -5,16 +5,20 @@
  * @returns 
  */
 const ordinalSuffixDate = ( date: number ) => {
-  switch ( date ) {
-    case 1:
-      return "1st";
-    case 2:
-      return "2nd";
-    case 3:
-      return "3rd";
-    default:
-      return `${ date }th`;
+
+  if ( date === 1 || date === 21 || date === 31 ) {
+    return `${ date }st`;
   }
+
+  if ( date === 2 || date === 22 ) {
+    return `${ date }nd`;
+  }
+
+  if ( date === 3 || date == 23 ) {
+    return `${ date }rd`;
+  }
+
+  return `${ date }th`;
 }
 
 export { ordinalSuffixDate };
