@@ -20,9 +20,13 @@ const Table = ( { tableType, tableData, totalValue, onRemove }: Props ) => {
     <table className={ styles['table'] }>
       <thead className={ styles['table__head'] }>
         <tr>
+          <th></th>
           <th>Title</th>
           <th>Amount</th>
+          { tableType !== "goal" ?
           <th>Date</th>
+          : ""
+          }
           <th>&nbsp;</th>
         </tr>
       </thead>
@@ -30,10 +34,14 @@ const Table = ( { tableType, tableData, totalValue, onRemove }: Props ) => {
       <tbody className={ styles['table__body'] }>
         { tableData.map( ( entry: TableEntry, index: number ) => (
           <tr key={ index }>
+            <td>{ index + 1 }</td>
             <td>{ entry.title }</td>
-            <td className={ styles["table__td--numeric"] }>{ entry.sum }</td>
-            <td className={ styles["table__td--numeric"] }>{ ordinalSuffixDate( entry.date ) }</td>
-            <td className={ styles["table__td--numeric"] }>
+            <td className={ styles["table__cell--right"] }>{ (entry.sum).toFixed( 2 ) }</td>
+            { tableType !== "goal" ?
+            <td className={ styles["table__cell--right"] }>{ ordinalSuffixDate( entry.date ) }</td>
+            : "" 
+            }
+            <td className={ styles["table__cell--right"] }>
               <button
                 className={ styles["table__button"] }
                 onClick={ () => onRemove( entry.id ) }
@@ -45,11 +53,15 @@ const Table = ( { tableType, tableData, totalValue, onRemove }: Props ) => {
 
       <tfoot className={ styles['table__footer'] }>
         <tr>
-          <th>
+          <th></th>
+          <th className={ styles["table__cell--right"] }>
             <strong>Total { `${ tableType }s` }</strong>
           </th>
-          <th className={ styles["table__th--numeric"] }>{ `${ constants.CURRENCY }${ totalValue.toFixed( 2 ) }` }</th>
+          <th className={ styles["table__cell--right"] }>{ `${ constants.CURRENCY }${ totalValue.toFixed( 2 ) }` }</th>
+          { tableType !== "goal" ?
           <th></th>
+          : ""
+          }
           <th></th>
         </tr>
       </tfoot>
