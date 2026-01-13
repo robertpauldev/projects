@@ -39,8 +39,6 @@ const Form = ( { formType, setFormData, data }: Props ) => {
       newEntry["date"] = parseInt( inputs[2].value.slice(-2), 10 );
     }
 
-    console.log( formType, newEntry );
-
     setFormData( prev => [ ...prev, newEntry ] );
 
     form.reset();
