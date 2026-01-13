@@ -54,7 +54,7 @@ const Form = ( { formType, setFormData, data }: Props ) => {
         <p className={ styles["form__intro"] }>{ `Enter all ${ pluraliseString( formType ) } for this month.` }</p>
 
         { formType === "goal" ?
-          <p>You have <strong>{ `${ constants.CURRENCY }${ ( data[0] - data[1] - data[2] ).toFixed( 2 ) }` }</strong> remaining this month.</p>
+          <p className={ styles["form__forecast"] }>You have <strong>{ `${ constants.CURRENCY }${ ( data[0] - data[1] - data[2] ).toFixed( 2 ) }` }</strong> income remaining after costs this month.</p>
         : "" }
 
         <div className={ styles["form__row"] }>
