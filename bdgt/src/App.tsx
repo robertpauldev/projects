@@ -43,6 +43,24 @@ function App() {
     );
   };
 
+  const [goalData, setGoalData] = useState<TableEntry[]>(
+    () => {
+      const stored = localStorage.getItem( "bdgt-goals" );
+      return stored ? JSON.parse( stored ) : [];
+    }
+  );
+
+  const totalGoals = useMemo(
+    () => goalData.reduce( ( sum, e ) => sum + e.sum, 0 ),
+    [goalData]
+  );
+
+  const removeGoal = (id: string) => {
+    setGoalData(prev =>
+      prev.filter(entry => entry.id !== id)
+    );
+  };
+
   useEffect(() => {
     localStorage.setItem('bdgt-income', JSON.stringify(incomeData));
   }, [incomeData]);
@@ -76,6 +94,11 @@ function App() {
           <section className={ styles["app__section"] }>
             <Form formType="cost" setFormData={ setCostData } />
             <Table tableType="cost" tableData={ costData } totalValue={ totalCosts } onRemove={ removeCost } />
+          </section>
+
+          <section className={ styles["app__section"] }>
+            <Form formType="goal" setFormData={ setGoalData } data={ [ totalIncome.toFixed( 2 ), totalCosts.toFixed( 2 ), totalGoals.toFixed( 2 ) ]} />
+            <Table tableType="goal" tableData={ goalData } totalValue={ totalGoals } onRemove={ removeGoal } />
           </section>
         </div>
       </div>
