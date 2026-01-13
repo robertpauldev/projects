@@ -1,4 +1,5 @@
 export const costTypes = [
+  "subscriptions",
   "utilities",
   "insurance",
   "fees",
@@ -11,7 +12,7 @@ export type CostType = typeof costTypes[number];
 export type TableEntry = {
   id: string;
   title: string;
-  type: string;
+  type?: string;
   sum: number;
-  date: number;
+  date?: number;
 };
