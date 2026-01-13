@@ -1,12 +1,14 @@
-import { costTypes, type CostType, type TableEntry } from "../../utils/types";
+import { costTypes, type TableEntry } from "../../utils/types";
+import { constants } from "../../utils/constants";
 import styles from "./form.module.scss";
 
 type Props = {
   formType: string;
   setFormData: Function;
+  data: Array<T>;
 }
 
-const Form = ( { formType, setFormData }: Props ) => {
+const Form = ( { formType, setFormData, data }: Props ) => {
 
   const handleIncomeSubmit = ( e: React.FormEvent<HTMLFormElement> ) => {
 
@@ -14,27 +16,29 @@ const Form = ( { formType, setFormData }: Props ) => {
 
     const form = e.currentTarget;
     const inputs = form.querySelectorAll( "input" );
-    const select = form.querySelector( "select" );
-
     const title = inputs[0].value.trim();
-    const type: CostType = select?.value;
-
     const sum   = parseFloat( inputs[1].value );
-    const date  = parseInt( inputs[2].value.slice(-2), 10 );
-    console.log(date);
-    // const date  = parseInt( inputs[2].value, 10 );
 
-    if ( !title || isNaN( sum) || isNaN(date) ) {
+    if ( !title || isNaN( sum ) ) {
       return;
     }
 
     const newEntry: TableEntry = {
       id: crypto.randomUUID(),
-      type,
       title,
       sum,
-      date
     };
+
+    if ( formType === "cost" ) {
+      const select = form.querySelector( "select" );
+      newEntry["type"] = select?.value;
+    }
+
+    if ( formType !== "goal" ) {
+      newEntry["date"] = parseInt( inputs[2].value.slice(-2), 10 );
+    }
+
+    console.log( formType, newEntry );
 
     setFormData( prev => [ ...prev, newEntry ] );
 
@@ -47,6 +51,10 @@ const Form = ( { formType, setFormData }: Props ) => {
 
       <fieldset className={ styles["form__fieldset"] }>
         <p className={ styles["form__intro"] }>{ `Enter all ${ formType }s for this month.` }</p>
+
+        { formType === "goal" ?
+          <p>You have <strong>{ `${ constants.CURRENCY }${ ( data[0] - data[1] - data[2] ).toFixed( 2 ) }` }</strong> remaining this month.</p>
+        : "" }
 
         <div className={ styles["form__row"] }>
           <input
@@ -62,7 +70,8 @@ const Form = ( { formType, setFormData }: Props ) => {
                   ( i, index ) => <option key={ index } value={ i }>{ i }</option>
                 )
               }
-            </select> : ""
+            </select>
+            : ""
           }
 
           <input
@@ -73,11 +82,13 @@ const Form = ( { formType, setFormData }: Props ) => {
             placeholder={ formType }
           />
 
+          { formType !== "goal" ?
           <input
             className={ styles["form__input"] }
             type="date"
             placeholder="Date"
           />
+          : "" }
 
           <button
             className={ styles["form__button"] }
