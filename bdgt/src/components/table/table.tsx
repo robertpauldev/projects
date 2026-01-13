@@ -1,5 +1,5 @@
 import type { TableEntry } from "../../utils/types";
-import { ordinalSuffixDate } from "../../utils/utils";
+import { ordinalSuffixDate, pluraliseString } from "../../utils/utils";
 import { constants } from "../../utils/constants";
 import styles from "./table.module.scss";
 
@@ -55,7 +55,7 @@ const Table = ( { tableType, tableData, totalValue, onRemove }: Props ) => {
         <tr>
           <th></th>
           <th className={ styles["table__cell--right"] }>
-            <strong>Total { `${ tableType }s` }</strong>
+            <strong>Total { pluraliseString( tableType ) }</strong>
           </th>
           <th className={ styles["table__cell--right"] }>{ `${ constants.CURRENCY }${ totalValue.toFixed( 2 ) }` }</th>
           { tableType !== "goal" ?

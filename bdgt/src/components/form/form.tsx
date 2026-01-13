@@ -1,5 +1,6 @@
 import { costTypes, type TableEntry } from "../../utils/types";
 import { constants } from "../../utils/constants";
+import { pluraliseString } from "../../utils/utils";
 import styles from "./form.module.scss";
 
 type Props = {
@@ -47,10 +48,10 @@ const Form = ( { formType, setFormData, data }: Props ) => {
 
   return (
     <form className={ styles["form"] } onSubmit={handleIncomeSubmit}>
-      <legend className={ styles["form__legend"] }>{ formType }</legend>
+      <legend className={ styles["form__legend"] }>{ pluraliseString( formType ) }</legend>
 
       <fieldset className={ styles["form__fieldset"] }>
-        <p className={ styles["form__intro"] }>{ `Enter all ${ formType }s for this month.` }</p>
+        <p className={ styles["form__intro"] }>{ `Enter all ${ pluraliseString( formType ) } for this month.` }</p>
 
         { formType === "goal" ?
           <p>You have <strong>{ `${ constants.CURRENCY }${ ( data[0] - data[1] - data[2] ).toFixed( 2 ) }` }</strong> remaining this month.</p>
