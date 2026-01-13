@@ -21,4 +21,13 @@ const ordinalSuffixDate = ( date: number ) => {
   return `${ date }th`;
 }
 
-export { ordinalSuffixDate };
+/**
+ * Returns a simple pluralised string, e.g. `beer` -> `beers`
+ * @param str The input string
+ * @returns 
+ */
+const pluraliseString = ( str: string ) => {
+  return `${ str }s`;
+}
+
+export { ordinalSuffixDate, pluraliseString };
