@@ -1,0 +1,84 @@
+.form {
+
+  &:not(:only-child) {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,.125);
+  }
+
+  &__fieldset {
+    border: unset;
+  }
+
+  &__legend {
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-transform: capitalize;
+  }
+
+  &__intro {
+    margin-bottom: 1rem;
+  }
+
+  &__forecast {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    font-size: 2rem;
+    background-color: rgba(255,255,255,.025);
+    border-radius: 1rem;
+
+    strong {
+      font-weight: 900;
+      color: hotpink;
+    }
+  }
+
+  &__row {
+    display: flex;
+    gap: .5rem;
+    border: unset;
+  }
+
+  &__input,
+  &__select {
+    background-color: rgba(255,255,255,.125);
+    color: #fff;
+    border-radius: .25rem;
+  }
+
+  &__select {
+    text-transform: capitalize;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    font-weight: 700;
+    color: #000;
+
+    &::before {
+      content: "+";
+      font-weight: 900;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__input,
+  &__button,
+  &__select {
+    padding-left: .5rem;
+    padding-right: .5rem;
+    border: unset;
+    line-height: 2;
+    font-family: "Nunito", sans-serif;
+    
+    &::placeholder {
+      text-transform: capitalize;
+    }
+  }
+}
