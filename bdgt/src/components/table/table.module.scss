@@ -4,14 +4,21 @@
   border-collapse: collapse;
   border-color: #fff;
 
+  th {
+    text-align: left;
+  }
+
   th,
   td {
     padding: .5rem;
-    text-align: left;
   }
 
   td {
     border: 1px solid rgba(255,255,255,.1);
+  }
+
+  &__cell--right {
+    text-align: right !important;
   }
 
   &__body {
