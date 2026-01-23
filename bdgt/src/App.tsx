@@ -10,9 +10,7 @@ function App() {
   const costs  = useBudgetCategory("bdgt-costs");
   const goals  = useBudgetCategory("bdgt-goals");
 
-
-  const remainingIncome =
-    income.total - costs.total - goals.total;
+  const remainingIncome = ( income.total - costs.total - goals.total );
 
   return (
     <div className={styles.app}>
