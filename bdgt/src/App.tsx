@@ -1,4 +1,3 @@
-import { useState, useEffect, useMemo } from "react";
 import "./App.css";
 import styles from "./app.module.scss";
 import Form from "./components/form/form";
@@ -7,102 +6,59 @@ import { useBudgetCategory } from "./hooks/hooks";
 
 function App() {
 
-  const [incomeData, setIncomeData] = useState<TableEntry[]>(
-    () => {
-      const stored = localStorage.getItem( "bdgt-income" );
-      return stored ? JSON.parse( stored ) : [];
-    }
-  );
+  const income = useBudgetCategory("bdgt-income");
+  const costs  = useBudgetCategory("bdgt-costs");
+  const goals  = useBudgetCategory("bdgt-goals");
 
-  const totalIncome = useMemo(
-    () => incomeData.reduce( ( sum, e ) => sum + e.sum, 0 ),
-    [incomeData]
-  );
 
-  const removeIncome = (id: string) => {
-    setIncomeData(prev =>
-      prev.filter(entry => entry.id !== id)
-    );
-  };
-
-  const [costData, setCostData] = useState<TableEntry[]>(
-    () => {
-      const stored = localStorage.getItem( "bdgt-costs" );
-      return stored ? JSON.parse( stored ) : [];
-    }
-  );
-
-  const totalCosts = useMemo(
-    () => costData.reduce( ( sum, e ) => sum + e.sum, 0 ),
-    [costData]
-  );
-
-  const removeCost = (id: string) => {
-    setCostData(prev =>
-      prev.filter(entry => entry.id !== id)
-    );
-  };
-
-  const [goalData, setGoalData] = useState<TableEntry[]>(
-    () => {
-      const stored = localStorage.getItem( "bdgt-goals" );
-      return stored ? JSON.parse( stored ) : [];
-    }
-  );
-
-  const totalGoals = useMemo(
-    () => goalData.reduce( ( sum, e ) => sum + e.sum, 0 ),
-    [goalData]
-  );
-
-  const removeGoal = (id: string) => {
-    setGoalData(prev =>
-      prev.filter(entry => entry.id !== id)
-    );
-  };
-
-  useEffect(() => {
-    localStorage.setItem('bdgt-income', JSON.stringify(incomeData));
-  }, [incomeData]);
-
-  useEffect(() => {
-    localStorage.setItem('bdgt-income-total', JSON.stringify(totalIncome));
-  }, [totalIncome]);
-
-  useEffect(() => {
-    localStorage.setItem('bdgt-costs', JSON.stringify(costData));
-  }, [costData]);
-
-  useEffect(() => {
-    localStorage.setItem('bdgt-costs-total', JSON.stringify(totalCosts));
-  }, [totalCosts]);
+  const remainingIncome =
+    income.total - costs.total - goals.total;
 
   return (
-    <>
-      <div className={ styles["app"] }>
-        <div className={ styles["app__wrap"] }>
-          <h1>bdgt</h1>
-          <div>
-            <p>Welcome to <strong>bdgt</strong>, your monthly budget forecaster.</p>
-          </div>
+    <div className={styles.app}>
+      <div className={styles.app__wrap}>
+        <h1>bdgt</h1>
 
-          <section className={ styles["app__section"] }>
-            <Form formType="income" setFormData={ setIncomeData } />
-            <Table tableType="income" tableData={ incomeData } totalValue={ totalIncome } onRemove={ removeIncome } />
-          </section>
+        <p>
+          Welcome to <strong>bdgt</strong>, your monthly budget forecaster.
+        </p>
 
-          <section className={ styles["app__section"] }>
-            <Form formType="cost" setFormData={ setCostData } />
-            <Table tableType="cost" tableData={ costData } totalValue={ totalCosts } onRemove={ removeCost } />
-          </section>
+        <section className={styles.app__section}>
+          <Form formType="income" onAdd={income.add} />
+          <Table
+            tableType="income"
+            tableData={income.data}
+            totalValue={income.total}
+            onRemove={income.remove}
+          />
+        </section>
 
-          <section className={ styles["app__section"] }>
-            <Form formType="goal" setFormData={ setGoalData } data={ [ totalIncome.toFixed( 2 ), totalCosts.toFixed( 2 ), totalGoals.toFixed( 2 ) ]} />
-            <Table tableType="goal" tableData={ goalData } totalValue={ totalGoals } onRemove={ removeGoal } />
-          </section>
-        </div>
+        <section className={styles.app__section}>
+          <Form formType="cost" onAdd={costs.add} />
+          <Table
+            tableType="cost"
+            tableData={costs.data}
+            totalValue={costs.total}
+            onRemove={costs.remove}
+          />
+        </section>
+
+        <section className={styles.app__section}>
+          <Form
+            formType="goal"
+            onAdd={goals.add}
+            remainingIncome={remainingIncome}
+
+          />
+          <Table
+            tableType="goal"
+            tableData={goals.data}
+            totalValue={goals.total}
+            onRemove={goals.remove}
+          />
+        </section>
       </div>
-    </>
+    </div>
   );
 }
 
