@@ -1,104 +1,125 @@
+import { useState } from "react";
 import { costTypes, type TableEntry } from "../../utils/types";
 import { constants } from "../../utils/constants";
 import { pluraliseString } from "../../utils/utils";
 import styles from "./form.module.scss";
 
 type Props = {
-  formType: string;
-  setFormData: Function;
-  data: Array<T>;
-}
+  formType: "income" | "cost" | "goal";
+  onAdd: (entry: TableEntry) => void;
+  remainingIncome?: number;
+};
 
-const Form = ( { formType, setFormData, data }: Props ) => {
+const Form = ({ formType, onAdd, remainingIncome }: Props) => {
 
-  const handleIncomeSubmit = ( e: React.FormEvent<HTMLFormElement> ) => {
+  const [title, setTitle] = useState("");
+  const [sum, setSum] = useState("");
+  const [date, setDate] = useState("");
+  const [costType, setCostType] = useState(costTypes[0]);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const form = e.currentTarget;
-    const inputs = form.querySelectorAll( "input" );
-    const title = inputs[0].value.trim();
-    const sum   = parseFloat( inputs[1].value );
+    const parsedSum = parseFloat(sum);
 
-    if ( !title || isNaN( sum ) ) {
+    if (!title.trim() || Number.isNaN(parsedSum)) {
       return;
     }
 
-    const newEntry: TableEntry = {
+    const entry: TableEntry = {
       id: crypto.randomUUID(),
-      title,
-      sum,
+      title: title.trim(),
+      sum: parsedSum,
     };
 
-    if ( formType === "cost" ) {
-      const select = form.querySelector( "select" );
-      newEntry["type"] = select?.value;
+    if (formType === "cost") {
+      entry.type = costType;
     }
 
-    if ( formType !== "goal" ) {
-      newEntry["date"] = parseInt( inputs[2].value.slice(-2), 10 );
+    if (formType !== "goal") {
+      entry.date = new Date(date).getDate();
     }
 
-    setFormData( prev => [ ...prev, newEntry ] );
+    onAdd(entry);
 
-    form.reset();
+    setTitle("");
+    setSum("");
+    setDate("");
+    setCostType(costTypes[0]);
   };
 
   return (
-    <form className={ styles["form"] } onSubmit={handleIncomeSubmit}>
-      <legend className={ styles["form__legend"] }>{ pluraliseString( formType ) }</legend>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <legend className={styles.form__legend}>
+        {pluraliseString(formType)}
+      </legend>
 
-      <fieldset className={ styles["form__fieldset"] }>
-        <p className={ styles["form__intro"] }>{ `Enter all ${ pluraliseString( formType ) } for this month.` }</p>
+      <fieldset className={styles.form__fieldset}>
+        <p className={styles.form__intro}>
+          Enter all {pluraliseString(formType)} for this month.
+        </p>
 
-        { formType === "goal" ?
-          <p className={ styles["form__forecast"] }>You have <strong>{ `${ constants.CURRENCY }${ ( data[0] - data[1] - data[2] ).toFixed( 2 ) }` }</strong> income remaining after costs this month.</p>
-        : "" }
+        {formType === "goal" && remainingIncome !== undefined && (
+          <p className={styles.form__forecast}>
+            You have{" "}
+            <strong>
+              {constants.CURRENCY}
+              {remainingIncome.toFixed(2)}
+            </strong>{" "}
+            income remaining after costs this month.
+          </p>
+        )}
 
-        <div className={ styles["form__row"] }>
+        <div className={styles.form__row}>
           <input
-            className={ styles["form__input"] }
+            className={styles.form__input}
             type="text"
             placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
 
-          { formType === "cost" ?
-            <select className={ styles["form__select"] }>
-              {
-                costTypes.map(
-                  ( i, index ) => <option key={ index } value={ i }>{ i }</option>
-                )
-              }
+          {formType === "cost" && (
+            <select
+              className={styles.form__select}
+              value={costType}
+              onChange={(e) => setCostType(e.target.value)}
+            >
+              {costTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
             </select>
-            : ""
-          }
+          )}
 
           <input
-            className={ styles["form__input"] }
+            className={styles.form__input}
             type="number"
+            inputMode="decimal"
             min="0"
             step="0.01"
-            placeholder={ formType }
+            placeholder={formType}
+            value={sum}
+            onChange={(e) => setSum(e.target.value)}
           />
 
-          { formType !== "goal" ?
-          <input
-            className={ styles["form__input"] }
-            type="date"
-            placeholder="Date"
-          />
-          : "" }
+          {formType !== "goal" && (
+            <input
+              className={styles.form__input}
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          )}
 
-          <button
-            className={ styles["form__button"] }
-            type="submit"
-          >
-            <span className={ styles["form__button-label"] }>Add { formType }</span>
+          <button className={styles.form__button} type="submit">
+            Add {formType}
           </button>
         </div>
       </fieldset>
     </form>
   );
-}
+};
 
 export default Form;

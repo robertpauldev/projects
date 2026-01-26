@@ -4,7 +4,7 @@
  * @param date The date expressed as a number
  * @returns 
  */
-const ordinalSuffixDate = ( date: number ) => {
+const ordinalSuffixDate = ( date: number | unknown ) => {
 
   if ( date === 1 || date === 21 || date === 31 ) {
     return `${ date }st`;
