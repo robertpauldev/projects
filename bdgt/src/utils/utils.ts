@@ -2,19 +2,23 @@
  * Returns the given date with its ordinal suffix,
  * e.g. 1st / 2nd / 3rd / 4th.
  * @param date The date expressed as a number
- * @returns 
+ * @returns string|null
  */
 const ordinalSuffixDate = ( date: number | unknown ) => {
 
-  if ( date === 1 || date === 21 || date === 31 ) {
+  if ( typeof date !== "number" ) {
+    return;
+  }
+
+  if ( [ 1, 21, 31 ].includes( date ) ) {
     return `${ date }st`;
   }
 
-  if ( date === 2 || date === 22 ) {
+  if ( [ 2, 22 ].includes( date ) ) {
     return `${ date }nd`;
   }
 
-  if ( date === 3 || date == 23 ) {
+  if ( [ 3, 23 ].includes( date ) ) {
     return `${ date }rd`;
   }
 
