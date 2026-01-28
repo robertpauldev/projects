@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { ordinalSuffixDate } from "../src/utils/utils"
+import { ordinalSuffixDate, pluraliseString } from "../src/utils/utils"
 
 describe( "ordinalSuffixDate", () => {
   it.each(
@@ -15,5 +15,16 @@ describe( "ordinalSuffixDate", () => {
     ]
   )( `returns $expected from $date`, ( { date, expected } ) => {
     expect( ordinalSuffixDate( date ) ).toStrictEqual( expected );
+  } );
+} );
+
+describe( "pluraliseString", () => {
+  it.each(
+    [
+      { str: "dog", expected: "dogs" },
+      { str: "cat", expected: "cats" },
+    ]
+  )( `returns $expected from $str`, ( { str, expected } ) => {
+    expect( pluraliseString( str ) ).toStrictEqual( expected );
   } );
 } );
