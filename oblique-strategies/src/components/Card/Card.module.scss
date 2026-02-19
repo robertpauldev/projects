@@ -1,0 +1,38 @@
+.card {
+  box-sizing: border-box;
+  padding: clamp(2rem, 5cqw, 3rem);
+  container-type: inline-size;
+  width: min(80vw, 600px);
+  border: unset;
+  background-color: #fff;
+  border-radius: clamp(1rem, 5cqw, 2rem);
+  transform: translateY(0);
+  transition: transform ease-in-out 0.222s;
+  aspect-ratio: 6/4;
+
+  &:hover {
+    cursor: pointer;
+    transform: translateY(-0.125rem) scale(1.025);
+  }
+
+  &__label {
+    display: block;
+    line-height: 1.333;
+    font-family: var(--font), sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+    font-size: clamp(1.2rem, 5cqw, 2.5rem);
+    text-wrap: balance;
+    color: #111;
+
+    &--wrapped {
+      text-align: left;
+    }
+
+    &--single {
+      text-align: center;
+    }
+  }
+}
